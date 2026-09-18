@@ -57,15 +57,14 @@ ecommerce-olist-analysis/
 |   |-- 06_payment_analysis.sql
 |   |-- 07_seller_analysis.sql
 |   `-- modify_database.sql
-|-- powerbi/
-|   `-- E-Commerce Sales, Customer Satisfaction, Delivery & Seller Performance Analysis Dashboard.pbix
-`-- screenshots/
-    |-- executive_overview.png
-    |-- sales_product_performance.png
-    |-- delivery_customer_satisfaction.png
-    |-- seller_performance.png
-    `-- payment_behavior.png
+`-- powerbi/                         # Local PBIX; distribute through GitHub Releases
 ```
+
+## Dashboard download
+
+The Power BI file is distributed separately through the repository's **Releases** section, rather than stored in Git history. After a release is published, download the `.pbix` asset and open it in Power BI Desktop. A local MySQL connection is required to refresh the source data.
+
+If no release is listed yet, the dashboard download has not been published. Raw CSV files should be downloaded from the Kaggle source linked above.
 
 ## Report pages
 
@@ -77,7 +76,8 @@ ecommerce-olist-analysis/
 | Seller Performance | Seller item sales, order volume, satisfaction comparisons, seller states |
 | Payment Behavior | Payment methods, payment values, installment distribution, order-level installment usage |
 
-The report includes page navigation, slicers, clear-slicer buttons, and date drill-down. Screenshots are static previews; use Power BI Desktop to explore the interactions.
+The report includes page navigation, slicers, clear-slicer buttons, and date drill-down. Open the PBIX in Power BI Desktop to explore the interactions.
+
 
 ## Metric definitions and scope
 
@@ -130,7 +130,7 @@ The repository currently uses a local MySQL workflow. The following steps descri
    USE olist_project;
    ```
 
-4. Configure the importer and notebook with local credentials kept outside source code. Use the connection pattern in `PUBLISH_CHECKLIST.md` if they have not yet been updated. Do not commit a password or populated `.env` file.
+4. Run the importer and notebook connection cell with your local MySQL credentials. Both use `getpass()` to prompt for the password rather than storing it in source code. The default connection is root on localhost, port 3306; edit those non-secret settings if needed.
 
 5. Run the importer from the repository root:
 
@@ -142,11 +142,11 @@ The repository currently uses a local MySQL workflow. The following steps descri
 
 6. Run `01_data_checking.sql`. Review and execute `modify_database.sql` on the fresh imported schema, then create `cleaned_orders` with `02_cleaned_orders_view.sql`. The schema script changes tables and is not designed for repeated execution. Keep `olist_project` selected for scripts without their own `USE` statement.
 
-7. Run the analytical SQL files `03` through `07`. Before running the current delivery script, correct its two undefined `o` aliases as described in `PUBLISH_CHECKLIST.md`.
+7. Run the analytical SQL files `03` through `07`. Review the validation notes below before interpreting seller/category review results.
 
 8. Open `python/eda_olist.ipynb`, configure its local database connection, and run cells in order. The notebook reads its tables and the analytical view from MySQL.
 
-9. Open the PBIX in Power BI Desktop. Configure its MySQL data-source settings and credentials for the local database before refreshing. Recheck measures and filter behavior after refresh.
+9. Download the PBIX from this repository's Releases section once a dashboard release has been published, then open it in Power BI Desktop. Configure its MySQL data-source settings and credentials for the local database before refreshing. Recheck measures and filter behavior after refresh.
 
 ## Validation status and limitations
 
