@@ -1,0 +1,20 @@
+# Passwords and local configuration
+.env
+.env.*
+!.env.example
+
+# Python environments and temporary files
+.venv/
+venv/
+__pycache__/
+*.pyc
+.ipynb_checkpoints/
+
+# Editor and operating-system files
+.vscode/
+.idea/
+.DS_Store
+Thumbs.db
+
+# Power BI file is uploaded through Releases
+*.pbix
