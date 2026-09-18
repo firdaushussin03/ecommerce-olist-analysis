@@ -1,4 +1,4 @@
-# Dependency names inferred from the existing scripts; versions are not yet pinned or clean-machine tested.
+# Python dependencies; versions are not pinned.
 pandas
 numpy
 matplotlib
