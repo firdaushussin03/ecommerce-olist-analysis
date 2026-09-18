@@ -3,11 +3,17 @@
 .env.*
 !.env.example
 
-# Python environments and temporary files
+# Raw data: download separately from Kaggle
+dataset/
+
+# Power BI files: distribute through GitHub Releases
+*.pbix
+
+# Python environments and generated files
 .venv/
 venv/
 __pycache__/
-*.pyc
+*.py[cod]
 .ipynb_checkpoints/
 
 # Editor and operating-system files
@@ -15,6 +21,3 @@ __pycache__/
 .idea/
 .DS_Store
 Thumbs.db
-
-# Power BI file is uploaded through Releases
-*.pbix
