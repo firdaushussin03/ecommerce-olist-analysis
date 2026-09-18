@@ -1,49 +1,60 @@
 # Olist E-Commerce Analysis
 
-An end-to-end portfolio project using **MySQL, Python, and Power BI** to explore sales, delivery performance, payment behavior, customer satisfaction, and seller performance in the Brazilian Olist marketplace.
+An end-to-end portfolio project using **MySQL, Python, and Power BI** to explore sales, delivery performance, customer satisfaction, seller performance, and payment behavior in the Brazilian Olist marketplace.
 
-The project combines relational data checks, SQL analysis, Python exploratory analysis, and a five-page interactive report. It is an exploratory portfolio project; seller/category review metrics and cross-table order scope remain under validation.
-
-## Dataset
-
-Download the source data from:
-[Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce).
-
-Extract the CSV files into a local `dataset/` folder before running
-the import script.
+The project combines SQL data checks and analysis, Python exploratory data analysis, and a five-page interactive Power BI report. Seller/category review calculations and consistency of order scope across tables remain under validation.
 
 ## Business questions
 
 - How do order volume, customer payments, and average order value change over time?
 - Which product categories and sellers contribute the most item sales value?
-- How do delivery duration and late-delivery rates vary by customer state?
-- How are delivery outcomes associated with review scores?
-- Which payment methods are most used, and how many orders use installments?
+- Which customer states have the highest late-delivery rates?
+- How do review scores differ between late and on-time deliveries?
+- Which payment methods contribute the most payment value, and how many orders use installments?
 
 ## Tools and workflow
+
+| Tool | Purpose |
+| --- | --- |
+| MySQL / MySQL Workbench | Data storage, data checks, schema changes, analytical view, and business queries |
+| Python: pandas, NumPy, Matplotlib | Data import, exploratory analysis, and visualization |
+| SQLAlchemy / PyMySQL | Python connection to MySQL |
+| Power BI Desktop | Data modeling, measures, slicers, drill-down, and interactive reporting |
 
 ```text
 Kaggle CSV files
     -> Python import into MySQL
     -> SQL data checks, schema changes, and cleaned_orders view
     -> SQL analysis and Python EDA
-    -> Power BI model and interactive report
+    -> Power BI dashboard
 ```
-
-| Tool | Role |
-| --- | --- |
-| MySQL / MySQL Workbench | Data storage, relational checks, analytical view, business queries |
-| Python: pandas, NumPy, Matplotlib | Data import, exploratory analysis, and plots |
-| SQLAlchemy / PyMySQL | Python-to-MySQL connection |
-| Power BI Desktop | Measures, slicers, drill-down, report navigation, and visual analysis |
 
 ## Dataset
 
-Source: [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce), published by Olist and collaborators.
+Source: [Brazilian E-Commerce Public Dataset by Olist](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce).
 
-The anonymized dataset covers approximately 100,000 orders from 2016 to 2018. This project uses orders, order items, customers, products, sellers, payments, reviews, and category translations. Seller identifiers are anonymized IDs, not business names.
+The anonymized dataset covers approximately 100,000 orders from 2016 to 2018. This project uses eight source files:
 
-Download the eight source CSV files from Kaggle into `dataset/`. Raw CSV files are excluded from this repository configuration. Refer to the source dataset page for its license and attribution terms; a PBIX with imported data also contains a copy of source-derived data.
+- `olist_orders_dataset.csv`
+- `olist_order_items_dataset.csv`
+- `olist_customers_dataset.csv`
+- `olist_products_dataset.csv`
+- `olist_sellers_dataset.csv`
+- `olist_order_payments_dataset.csv`
+- `olist_order_reviews_dataset.csv`
+- `product_category_name_translation.csv`
+
+Download and extract these files into a local `dataset/` folder at the repository root. Raw CSV files are not included in the repository and are excluded by `.gitignore`. The geolocation file is not required by the importer.
+
+Seller IDs are anonymized identifiers, not business names. Refer to the Kaggle dataset page for its license and attribution terms. The downloadable PBIX also contains imported, source-derived data.
+
+## Dashboard download
+
+Download the `.pbix` asset from the [Power BI dashboard v1.0 release](https://github.com/firdaushussin03/ecommerce-olist-analysis/releases/tag/v1.0.0) and open it in Power BI Desktop.
+
+To refresh the data, set up the local MySQL database using the instructions below and update the dashboard's data-source settings and credentials.
+
+The dashboard is distributed through GitHub Releases rather than committed to the repository. Dashboard previews are available in the [screenshots folder](screenshots/).
 
 ## Repository structure
 
@@ -52,7 +63,6 @@ ecommerce-olist-analysis/
 |-- README.md
 |-- requirements.txt
 |-- .gitignore
-|-- dataset/                         # Local CSV downloads; not committed
 |-- python/
 |   |-- import_to_mysql.py
 |   `-- eda_olist.ipynb
@@ -65,106 +75,114 @@ ecommerce-olist-analysis/
 |   |-- 06_payment_analysis.sql
 |   |-- 07_seller_analysis.sql
 |   `-- modify_database.sql
-`-- powerbi/                         # Local PBIX; distribute through GitHub Releases
+`-- screenshots/
+    |-- Executive Overview.png
+    |-- Sales & Product Performance.png
+    |-- Delivery & Customer Satisfaction.png
+    |-- Seller Performance.png
+    `-- Payment Behavior.png
 ```
 
-## Dashboard download
+Create `dataset/` locally for the downloaded CSV files. The PBIX can be stored locally in an optional `powerbi/` folder; neither folder needs to be uploaded to GitHub.
 
-The Power BI file is distributed separately through the repository's **Releases** section, rather than stored in Git history. After a release is published, download the `.pbix` asset and open it in Power BI Desktop. A local MySQL connection is required to refresh the source data.
-
-If no release is listed yet, the dashboard download has not been published. Raw CSV files should be downloaded from the Kaggle source linked above.
-
-## Report pages
+## Dashboard pages
 
 | Page | Focus |
 | --- | --- |
-| Executive Overview | Customer payment totals, orders, AOV, review score, delivery rates, time trends, customer states |
-| Sales & Product Performance | Item sales by category, revenue versus satisfaction, negative-review rankings |
-| Delivery & Customer Satisfaction | Delivery duration, state late-delivery rates, review scores by delivery status |
-| Seller Performance | Seller item sales, order volume, satisfaction comparisons, seller states |
-| Payment Behavior | Payment methods, payment values, installment distribution, order-level installment usage |
+| Executive Overview | Payment totals, orders, average order value, reviews, delivery rates, time trends, and customer states |
+| Sales & Product Performance | Item sales by category, revenue versus satisfaction, and negative-review rankings |
+| Delivery & Customer Satisfaction | Delivery duration, late-delivery rates by state, and review scores by delivery status |
+| Seller Performance | Seller item sales, order volume, satisfaction comparisons, and seller states |
+| Payment Behavior | Payment methods, payment values, installment distribution, and order-level installment use |
 
-The report includes page navigation, slicers, clear-slicer buttons, and date drill-down. Open the PBIX in Power BI Desktop to explore the interactions.
+The report includes page navigation, slicers, clear-slicer buttons, and date drill-down.
 
+## Metric definitions
 
-## Metric definitions and scope
-
-| Metric | Definition / interpretation |
+| Metric | Definition |
 | --- | --- |
-| Total Revenue / Total Payment Value | Sum of `payments.payment_value`; customer payment value, not profit or Olist commission income |
-| Item Revenue | Sum of item `price + freight_value`; used to attribute item sales value to sellers and categories |
+| Total Revenue / Total Payment Value | Sum of `payments.payment_value`: customer payment value, not profit or Olist commission income |
+| Item Revenue | Sum of item `price + freight_value`, used for seller and category sales attribution |
 | Delivered-order population | `cleaned_orders`: orders with `order_status = 'delivered'` and a non-null actual delivery date |
 | Delivery Days | SQL `DATEDIFF(actual delivery, purchase timestamp)` |
 | Delay Days | SQL `DATEDIFF(actual delivery, estimated delivery)` |
 | Late Delivery Rate | Late orders divided by eligible delivered orders |
-| Average Order Value | Payment value divided by distinct orders in the intended matching order population; not average payment-record value |
+| Average Order Value | Payment value divided by distinct orders in the matching order population |
 | Average Payment Value | Average `payment_value` across payment records |
 | Orders Using Installments | Distinct orders with at least one payment record where `payment_installments > 1` |
-| Order Payment Plan | Each order belongs to one group: Uses installments or No installments, even when it has several payment records |
-| Negative reviews | Review scores of 1 or 2; the aggregation grain must be checked when comparing categories or sellers |
+| Order Payment Plan | Each order is classified once as Uses installments or No installments |
+| Negative Reviews | Reviews with a score of 1 or 2 |
 
-The SQL view classifies lateness by comparing actual and estimated timestamps. Its day differences use calendar dates, so a same-date delivery can have zero delay days while still being classified as late if its timestamp is later than the estimate.
+The SQL view compares actual and estimated timestamps to classify lateness. Its day differences use calendar dates, so a delivery can have zero delay days and still be classified as late when its timestamp is later than the estimate.
 
-Payment analysis uses payment records unless explicitly labelled as orders. The seller table filters `Total Orders > 0`; this controls visible sellers but does not itself restrict every revenue or review calculation to delivered orders. The category table excludes blank category labels, so its visible totals can differ from overall cards.
+Payment records and orders are different units: one order can have multiple payment records. The installment-use card and donut use order-level classification to avoid counting one order in both groups.
 
 ## Observations from the report
 
-The saved dashboard screenshots show the following descriptive patterns. They are report observations, not evidence of causal effects or a completed independent reconciliation of all measures.
+The saved report shows these descriptive patterns in its displayed selection:
 
-- Late deliveries show an average duration of **31.48 days**, compared with **10.82 days** for on-time deliveries.
-- The displayed average review score is lower for late deliveries (**2.6**) than for on-time deliveries (**4.3**). This is an association, not proof that delay alone caused the score difference.
-- **51.46%** of orders use installments in the displayed selection. The order-level card and donut agree.
-- Credit cards account for the largest displayed payment value.
+- Late deliveries average **31.48 days**, compared with **10.82 days** for on-time deliveries.
+- Average review scores are **2.6 for late deliveries** and **4.3 for on-time deliveries**.
+- **51.46% of orders use installments**; the order-level card and donut agree.
+- Credit cards contribute the largest displayed payment value.
 - Sao Paulo (SP) leads the displayed customer-state and seller-state sales comparisons.
 
-These patterns suggest investigating delivery routes with high late rates and substantial order volumes. Seller/category satisfaction rankings should be validated before using them to recommend interventions. Compare complete time periods before interpreting an end-of-dataset decline.
+These observations suggest investigating delivery routes with high late rates and substantial order volumes. They describe associations, not proof of causation. Seller/category satisfaction rankings require the validation described below before being used to recommend interventions.
 
 ## Reproducing the project
 
-The repository currently uses a local MySQL workflow. The following steps describe the intended setup; a clean-machine execution has not yet been verified.
+The project uses a local MySQL workflow. A complete clean-machine execution has not yet been verified.
 
-1. Install Python, MySQL, MySQL Workbench, and Power BI Desktop. Install Python dependencies from the repository root:
+1. Install Python, MySQL Server, MySQL Workbench, and Power BI Desktop. MySQL and Power BI are separate applications and are not installed by `requirements.txt`.
+
+2. Download or clone this repository and open a terminal in its root folder. Install the Python dependencies:
 
    ```bash
    python -m pip install -r requirements.txt
    ```
 
-2. Download the eight CSV files listed in `python/import_to_mysql.py` into `dataset/`.
+3. Download the eight CSV files listed above and place them directly inside `dataset/`.
 
-3. Create and select a dedicated database in MySQL Workbench:
+4. Create a dedicated database in MySQL Workbench:
 
    ```sql
    CREATE DATABASE olist_project;
    USE olist_project;
    ```
 
-4. Run the importer and notebook connection cell with your local MySQL credentials. Both use `getpass()` to prompt for the password rather than storing it in source code. The default connection is root on localhost, port 3306; edit those non-secret settings if needed.
-
-5. Run the importer from the repository root:
+5. Check the connection settings in `python/import_to_mysql.py`. The default connection uses `root`, `localhost`, port `3306`, and database `olist_project`. The password is entered using `getpass()` instead of being stored in the source code. Run the importer from the repository root:
 
    ```bash
    python python/import_to_mysql.py
    ```
 
-   The current importer uses `if_exists="replace"`. Run it against a fresh project database; rerunning it can replace tables and conflict with constraints added later.
+   The importer uses `if_exists="replace"`. Use a fresh project database: rerunning it replaces tables and can conflict with constraints added later.
 
-6. Run `01_data_checking.sql`. Review and execute `modify_database.sql` on the fresh imported schema, then create `cleaned_orders` with `02_cleaned_orders_view.sql`. The schema script changes tables and is not designed for repeated execution. Keep `olist_project` selected for scripts without their own `USE` statement.
+6. In MySQL Workbench, keep `olist_project` selected. Run `sql/01_data_checking.sql`, review and execute `sql/modify_database.sql`, then run `sql/02_cleaned_orders_view.sql`. The schema modification script is intended for the initial setup and is not designed for repeated execution.
 
-7. Run the analytical SQL files `03` through `07`. Review the validation notes below before interpreting seller/category review results.
+7. Run analytical SQL files `03_sales_analysis.sql` through `07_seller_analysis.sql`.
 
-8. Open `python/eda_olist.ipynb`, configure its local database connection, and run cells in order. The notebook reads its tables and the analytical view from MySQL.
+8. Start JupyterLab:
 
-9. Download the PBIX from this repository's Releases section once a dashboard release has been published, then open it in Power BI Desktop. Configure its MySQL data-source settings and credentials for the local database before refreshing. Recheck measures and filter behavior after refresh.
+   ```bash
+   python -m jupyterlab
+   ```
+
+   Open `python/eda_olist.ipynb`, check its database connection settings, enter the MySQL password when prompted, and run the cells in order.
+
+9. Download the PBIX from the [published release](https://github.com/firdaushussin03/ecommerce-olist-analysis/releases/tag/v1.0.0). Open it in Power BI Desktop. Before refreshing, configure its MySQL data-source settings and credentials for your local database.
+
+Python dependency versions are not pinned; this repository does not yet provide a fully tested, reproducible environment lockfile.
 
 ## Validation status and limitations
 
-- Seller/category review-score filtering and consistency of delivered-order scope across measures remain under validation. Hiding zero-order sellers does not prove that their underlying review calculations are correct.
-- Some SQL and notebook analyses join reviews to item rows. This can weight a review multiple times for multi-item orders; multiple reviews for an order can also duplicate item amounts in joined SQL revenue sums. Aggregation grain must be reconciled before treating those rankings as final.
-- Reviews belong to orders. A review on a multi-seller order cannot conclusively attribute satisfaction or dissatisfaction to an individual seller.
-- Missing categories are excluded from the category table rather than resolved in the source data.
-- Date coverage is incomplete at the dataset boundaries. Partial periods should not be compared directly with complete periods without qualification.
-- Payment SQL and dashboard measures have different units in some places. Payment-record averages, payment value per order, and order-level installment rates must be labelled distinctly.
+- **Order scope:** Consistency of the delivered-order population across payment, item, seller, and review measures remains under validation. Filtering the seller table to `Total Orders > 0` controls visible sellers but does not itself restrict every underlying calculation to delivered orders.
+- **Join duplication:** Some SQL and notebook analyses join reviews directly to item rows. Multi-item orders can cause a review to receive extra weight; multiple reviews for one order can duplicate item amounts in joined revenue sums. These aggregations need reconciliation before treating rankings as final.
+- **Review attribution:** Reviews belong to orders. For a multi-seller order, a review cannot conclusively identify which seller caused satisfaction or dissatisfaction.
+- **Missing categories:** The category table excludes blank category labels rather than resolving the missing source values. Its visible totals can therefore differ from overall cards.
+- **Partial periods:** Dataset boundaries contain incomplete time periods. Compare complete periods before interpreting apparent growth or decline.
+- **Payment units:** Payment-record averages, payment value per order, and order-level installment rates answer different questions. Some SQL and dashboard calculations use different units and should be interpreted accordingly.
 
 ## Acknowledgments
 
-Data provided by [Olist and collaborators on Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce). This is an independent educational analysis and is not affiliated with Olist.
+Data provided by [Olist and collaborators on Kaggle](https://www.kaggle.com/datasets/olistbr/brazilian-ecommerce). This is an independent educational project and is not affiliated with Olist.
