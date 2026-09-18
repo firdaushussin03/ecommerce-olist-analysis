@@ -4,10 +4,6 @@ An end-to-end portfolio project using **MySQL, Python, and Power BI** to explore
 
 The project combines relational data checks, SQL analysis, Python exploratory analysis, and a five-page interactive report. It is an exploratory portfolio project; seller/category review metrics and cross-table order scope remain under validation.
 
-## Dashboard preview
-
-![Executive Overview](screenshots/executive_overview.png)
-
 ## Business questions
 
 - How do order volume, customer payments, and average order value change over time?
